@@ -1,0 +1,82 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3'
+    }
+}
+
+apply plugin: 'scala'
+apply plugin: 'idea'
+apply plugin: 'application'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+group 'com.forevergenin.scala.demo'
+version '0.1-SNAPSHOT'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'org.scala-lang:scala-library:2.10.6'
+    testCompile 'org.scala-lang:scala-library:2.10.6'
+}
+
+//
+// Begin Application
+//
+mainClassName = 'com.forevergenin.scala.demo.HelloWorld'
+//
+// End Application
+//
+
+//
+// Begin Jar
+//
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.forevergenin.scala.demo.HelloWorld'
+    }
+}
+//
+// End Jar
+//
+
+//
+// Begin IDEA
+//
+// Workaround for IDEA directory based project management
+// Refer : https://gist.github.com/childnode/12757be70b2895a1eed0
+//
+idea {
+    targetVersion = "2016"
+}
+
+tasks.withType(GenerateIdeaProject) {
+    doLast {
+        copy {
+            from '.'
+            into '.idea/'
+            include '*.ipr'
+            rename { "modules.xml" }
+        }
+        project.delete "${project.name}.ipr"
+    }
+}
+
+tasks.withType(GenerateIdeaWorkspace) {
+    doLast {
+        copy {
+            from '.'
+            into '.idea/'
+            include '*.iws'
+            rename { "workspace.xml" }
+        }
+        project.delete "${project.name}.iws"
+    }
+}
+//
+// End IDEA
+//
