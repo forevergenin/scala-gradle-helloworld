@@ -1,0 +1,22 @@
+# ignore temporary files created by IntelliJ IDEA
+*.iml
+.idea/
+
+# ignore temporary files created by text editors
+*~
+*.swp
+
+# ignore build related files created by Maven
+*.class
+target/
+*.jar
+
+# ignore build related files created by Gradle
+.gradle/
+build/
+
+# ignore files created by Windows OS
+Desktop.ini
+
+# ignore files created by Mac OS X
+.DS_Store
